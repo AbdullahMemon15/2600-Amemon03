@@ -42,7 +42,6 @@ const App = () => {
     prayers={prayers} 
     fetchPrayers={fetchPrayers}
   />
-      <h3 className="note">Note: I am aware of the -1 date issue when adding and editing prayer and am working to solve this issue</h3>
       <h2>Prayer Times</h2>
       <PrayerTimeList prayers={prayers} onEditClick={handleEditClick} fetchPrayers={fetchPrayers} />
       <h2>Prayer Calendar</h2>
