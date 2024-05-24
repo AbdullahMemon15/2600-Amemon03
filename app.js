@@ -9,13 +9,15 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Use cors middleware
+app.use(cors({
+  origin: ["https://2600-amemon03.vercel.app"], // Include full URL with protocol
+  methods: ["POST", "GET", "PUT", "DELETE"], // Allow all relevant methods
+  credentials: true
+}));
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
 app.use("/api/prayerTimes", prayerRoutes)
-
-
 
 connection.then(()=>{
     const PORT = process.env.PORT || 8080;
@@ -26,6 +28,3 @@ connection.then(()=>{
 app.get('/', (req, res) => {
   res.send('Welcome to the Prayer Time App API ');
 });
-
-module.exports = app;
-
