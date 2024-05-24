@@ -8,7 +8,7 @@ module.exports = mongoose.connect(uri, {
   useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error: ', err));
-
-
-// module.exports = mongoose.connect(mongoDB);
+.catch(err => {
+  console.error('MongoDB connection error: ', err.message);
+  process.exit(1);
+});
