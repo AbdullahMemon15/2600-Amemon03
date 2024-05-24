@@ -3,24 +3,19 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const connection  = require("./config");
 const prayerRoutes = require("./routes/prayerRoutes");
-const cors = require('cors');
+// const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Use cors middleware
+// app.use(cors()); // Use cors middleware
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
 app.use("/api/prayerTimes", prayerRoutes)
 
-const corsOptions = {
-  origin: 'https://2600-amemon03.vercel.app',
-  optionsSuccessStatus: 200
-};
 
-app.use(cors(corsOptions));
 
 connection.then(()=>{
     const PORT = process.env.PORT || 8080;
