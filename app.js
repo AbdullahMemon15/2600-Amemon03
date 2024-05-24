@@ -15,6 +15,13 @@ app.use(express.urlencoded({extended:true}));
 
 app.use("/api/prayerTimes", prayerRoutes)
 
+const corsOptions = {
+  origin: 'https://2600-amemon03.vercel.app',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
 connection.then(()=>{
     const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => {
