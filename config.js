@@ -5,14 +5,13 @@ console.log('DB_CONNECTION:', process.env.DB_CONNECTION); // Log to ensure it's 
 
 let mongoDB = process.env.DB_CONNECTION;
 
-module.exports = mongoose.connect(uri, {
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
 .then(() => console.log('MongoDB connected'))
 .catch(err => {
   console.error('MongoDB connection error: ', err.message);
-  process.exit(1);
 });
 
 module.exports = mongoose;
