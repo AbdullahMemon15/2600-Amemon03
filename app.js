@@ -42,11 +42,59 @@
 
 
 
+// const express = require("express");
+// const dotenv = require("dotenv");
+// const connectDB = require("./config");
+// const prayerRoutes = require("./routes/prayerRoutes");
+// const cors = require('cors');
+
+// dotenv.config();
+
+// const app = express();
+// app.use(express.json());
+
+// app.use(cors({
+//   origin: ["https://2600-amemon03.vercel.app"], // Ensure this matches your Vercel deployment URL
+//   methods: ["POST", "GET", "PUT", "DELETE"], // Allow all relevant methods
+//   credentials: true
+// }));
+
+// app.use(express.static('public'));
+// app.use(express.urlencoded({ extended: true }));
+
+// app.use("/api/prayerTimes", prayerRoutes);
+
+// const startServer = async () => {
+//   await connectDB();
+  
+//   const PORT = process.env.PORT || 8080;
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+//   });
+// };
+
+// startServer();
+
+// app.get('/', (req, res) => {
+//   res.send('Welcome to the Prayer Time App API');
+// });
+
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error('Error occurred:', err);
+//   res.status(500).send('Something broke!');
+// });
+
+// module.exports = app;
+
+
+
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config");
 const prayerRoutes = require("./routes/prayerRoutes");
 const cors = require('cors');
+const path = require('path');
 
 dotenv.config();
 
@@ -54,29 +102,32 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: ["https://2600-amemon03.vercel.app"], // Ensure this matches your Vercel deployment URL
-  methods: ["POST", "GET", "PUT", "DELETE"], // Allow all relevant methods
+  origin: ["https://2600-amemon03.vercel.app"],
+  methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/prayerTimes", prayerRoutes);
 
 const startServer = async () => {
-  await connectDB();
-  
-  const PORT = process.env.PORT || 8080;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+  try {
+    await connectDB();
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server', err);
+  }
 };
 
 startServer();
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Prayer Time App API');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Error handling middleware
@@ -86,3 +137,4 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
