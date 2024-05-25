@@ -1,4 +1,4 @@
 .c9
 .env
-vercel.json
 node_modules
+.vercel
